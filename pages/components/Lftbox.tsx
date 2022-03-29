@@ -33,24 +33,23 @@ const UlLft = styled.ul`
 export default function LeftBox() {
     const router = useRouter();
     const {asPath } = router
-    console.log("=========router=====",router)
     return <div>
         <UlLft>
-            <li className={ asPath==='/'?'active':''}>
+            <li className={ asPath==='/gas-price'?'active':''}>
                 <span className="lft"><img src="/assets/images/eth.png" alt=""/></span>
-                <span className="rht"><Link href='/'>Ethereum</Link></span>
+                <span className="rht"><Link href='/gas-price'>Ethereum</Link></span>
             </li>
-            <li className={ asPath==='/matic'?'active':''}>
+            <li className={ asPath==='/gas-price/matic'?'active':''}>
                 <span className="lft"><img src="/assets/images/matic.png" alt=""/></span>
-                <span className="rht"><Link href='/matic'>Matic</Link></span>
+                <span className="rht"><Link href='/gas-price/matic'>Matic</Link></span>
             </li>
-            <li className={ asPath==='/bsc'?'active':''}>
+            <li className={ asPath==='/gas-price/bsc'?'active':''}>
                 <span className="lft"><img src="/assets/images/bnb.png" alt=""/></span>
-                <span className="rht"><Link href='/bsc'>BSC</Link></span>
+                <span className="rht"><Link href='/gas-price/bsc'>BSC</Link></span>
             </li>
-            <li className={asPath==='/heco'?'active':''}>
+            <li className={asPath==='/gas-price/heco'?'active':''}>
                 <span className="lft"><img src="/assets/images/heco.png" alt=""/></span>
-                <span className="rht"><Link href='/heco'>HECO</Link></span>
+                <span className="rht"><Link href='/gas-price/heco'>HECO</Link></span>
             </li>
         </UlLft>
     </div>
