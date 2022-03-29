@@ -43,13 +43,13 @@ export default function LeftBox() {
                 <span className="lft"><img src="/gas-price/assets/images/matic.png" alt=""/></span>
                 <span className="rht"><Link href='/gas-price/matic'>Matic</Link></span>
             </li>
-            <li className={ asPath==='/gas-price/bsc'?'active':''}>
+            <li className={ asPath==='/bsc'?'active':''}>
                 <span className="lft"><img src="/gas-price/assets/images/bnb.png" alt=""/></span>
-                <span className="rht"><Link href='/gas-price/bsc'>BSC</Link></span>
+                <span className="rht"><Link href='/bsc'>BSC</Link></span>
             </li>
-            <li className={asPath==='/gas-price/heco'?'active':''}>
+            <li className={asPath==='/heco'?'active':''}>
                 <span className="lft"><img src="/gas-price/assets/images/heco.png" alt=""/></span>
-                <span className="rht"><Link href='/gas-price/heco'>HECO</Link></span>
+                <span className="rht"><Link href='/heco'>HECO</Link></span>
             </li>
         </UlLft>
     </div>
