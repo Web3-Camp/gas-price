@@ -1,10 +1,11 @@
 import {ReactNode, useEffect, useState} from "react";
-import Layout from "./components/layout";
+import Layout from "../components/layout";
 import styled from "styled-components";
 import {Col,Row,Card} from "react-bootstrap";
 import axios from "axios";
 import { useRouter } from "next/router";
-import EchartsLine from "./components/echartsLine";
+import EchartsLine from "../components/echartsLine";
+import {ethers} from 'ethers';
 
 const Box = styled.div`
   .firstLine{
@@ -21,18 +22,10 @@ const Box = styled.div`
   }
   .number{
     text-align: center;
-    font-size: 30px;
+    font-size: 24px;
     font-weight: bolder;
-    padding: 10px 0;
+    padding-top: 5px;
     color: #000000;
-  }
-  .time{
-    text-align: center;
-    span{
-      color: rgba(0,0,0,0.4);
-      font-size: 12px;
-      padding-left:5px;
-    }
   }
 `
 const EchartsBox = styled.div`
@@ -41,18 +34,18 @@ const EchartsBox = styled.div`
 `
 
 interface maticObj{
-    blockNum:number|undefined;
-    fastest:number|undefined;
-    fast: number|undefined;
-    safeLow: number|undefined;
-    average: number|undefined;
-    fastestWait: number|undefined;
-    fastWait: number|undefined;
-    avgWait: number|undefined;
-    safeLowWait: number|undefined;
+    fast: {
+        price:number
+    };
+    slow: {
+        price:number
+    };
+    normal:{
+        price:number
+    }
 }
 
-export default function Home<NextPage>()  {
+export default function TypeLine<NextPage>()  {
     const router = useRouter();
     const {type} = router.query;
 
@@ -68,10 +61,10 @@ export default function Home<NextPage>()  {
         const getMatic = async() =>{
             const result = await axios({
                 method: 'get',
-                url: `https://ethgasstation.info/json/ethgasAPI.json`
+                url: `https://api.debank.com/chain/gas_price_dict_v2?chain=${type}`
             });
-            console.log("==result.data.data======",result.data)
-            setInfo(result.data);
+            console.log("==result.data.data======",result.data.data)
+            setInfo(result.data.data);
         }
         getMatic()
         let t = 10
@@ -91,10 +84,10 @@ export default function Home<NextPage>()  {
 
     useEffect(()=>{
         if(info==null)return;
-        const { fastest } = info;
-        const pri = format(fastest)
+        const { normal:{price} } = info;
+        const pri = format(price)
         const arr = [...averArr];
-        arr.push(pri)
+        arr.push(price)
         setAverArr(arr);
         const tArr = [...timeArr];
         const newtime = new Date().toLocaleTimeString();
@@ -102,9 +95,9 @@ export default function Home<NextPage>()  {
         setTimeArr(tArr);
     },[info])
 
-    const format = (number:number|undefined) =>{
-        const num = number ? number : 0
-        return  (num / 10)
+    const format = (number:number) =>{
+       return  ( Number(number) / 10 ** 9).toFixed(1)
+        // return ethers.utils.formatEther(num)
     }
     return (
         <>
@@ -114,39 +107,28 @@ export default function Home<NextPage>()  {
                         Next update in {time}s
                     </div>
                     <div>
-                        block number:{info?.blockNum}
+                        <img src="" alt=""/>
                     </div>
                 </div>
                 <Row>
-                    <Col md={3} xs={12}>
-                        <Card body>
-                            <div className="title">Fastest</div>
-                            <div className="number">{format(info?.fastest)}</div>
-                            <div className="time">{info?.fastestWait}<span>min</span></div>
-                        </Card>
-                    </Col>
-                    <Col md={3} xs={12}>
+                    <Col md={4} xs={12}>
                         <Card body>
                             <div className="title">Fast</div>
-                            <div className="number">{format(info?.fast)}</div>
-                            <div className="time">{info?.fastWait}<span>min</span></div>
+                            <div className="number">{format(info?.fast.price??0)}</div>
                         </Card>
                     </Col>
-                    <Col md={3} xs={12}>
+                    <Col md={4} xs={12}>
                         <Card body>
-                            <div className="title">Average</div>
-                            <div className="number">{format(info?.average)}</div>
-                            <div className="time">{info?.avgWait}<span>min</span></div>
+                            <div className="title">Standard</div>
+                            <div className="number">{format(info?.normal.price??0)}</div>
                         </Card>
                     </Col>
-                    <Col md={3} xs={12}>
+                    <Col md={4} xs={12}>
                         <Card body>
-                            <div className="title">Safe</div>
-                            <div className="number">{format(info?.safeLow)}</div>
-                            <div className="time">{info?.safeLowWait}<span>min</span></div>
+                            <div className="title">Low</div>
+                            <div className="number">{format(info?.slow.price??0)}</div>
                         </Card>
                     </Col>
-
                 </Row>
                 <EchartsBox>
                     <EchartsLine data={averArr} timeData={timeArr}/>
@@ -164,7 +146,7 @@ interface LayoutProps {
     children: ReactNode;
 }
 
-Home.getLayout = function getLayout(page:LayoutProps) {
+TypeLine.getLayout = function getLayout(page:LayoutProps) {
     return (
         <Layout>
             {page}
