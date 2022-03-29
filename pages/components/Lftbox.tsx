@@ -36,19 +36,19 @@ export default function LeftBox() {
     return <div>
         <UlLft>
             <li className={ asPath==='/gas-price'?'active':''}>
-                <span className="lft"><img src="/assets/images/eth.png" alt=""/></span>
+                <span className="lft"><img src="/gas-price/assets/images/eth.png" alt=""/></span>
                 <span className="rht"><Link href='/gas-price'>Ethereum</Link></span>
             </li>
             <li className={ asPath==='/gas-price/matic'?'active':''}>
-                <span className="lft"><img src="/assets/images/matic.png" alt=""/></span>
+                <span className="lft"><img src="/gas-price/assets/images/matic.png" alt=""/></span>
                 <span className="rht"><Link href='/gas-price/matic'>Matic</Link></span>
             </li>
             <li className={ asPath==='/gas-price/bsc'?'active':''}>
-                <span className="lft"><img src="/assets/images/bnb.png" alt=""/></span>
+                <span className="lft"><img src="/gas-price/assets/images/bnb.png" alt=""/></span>
                 <span className="rht"><Link href='/gas-price/bsc'>BSC</Link></span>
             </li>
             <li className={asPath==='/gas-price/heco'?'active':''}>
-                <span className="lft"><img src="/assets/images/heco.png" alt=""/></span>
+                <span className="lft"><img src="/gas-price/assets/images/heco.png" alt=""/></span>
                 <span className="rht"><Link href='/gas-price/heco'>HECO</Link></span>
             </li>
         </UlLft>
